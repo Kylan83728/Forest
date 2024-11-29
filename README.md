@@ -48,19 +48,29 @@ local Toggle = farmTab:CreateToggle({
     [1] = workspace.NPC.Farmer.LeftUpperLeg
 }
 
- isHitting = Value
+local isHitting = false -- Initialiser la variable isHitting
 
-        if isHitting then
-            -- Lancer une boucle non bloquante
-            task.spawn(function()
-                while isHitting do
-
-game:GetService("ReplicatedStorage").OnSuccessfulHit:FireServer(unpack(args))
-task.wait(0.1) -- Pause
-end
-            end)
+-- Fonction pour démarrer la frappe
+local function startHitting()
+    isHitting = true
+    -- Lancer une boucle non bloquante
+    task.spawn(function()
+        while isHitting do
+            game:GetService("ReplicatedStorage").OnSuccessfulHit:FireServer(unpack(args))
+            task.wait(0.1) -- Pause de 0.1 seconde entre chaque frappe
         end
-        
+    end)
+end
+
+-- Fonction pour arrêter la frappe
+local function stopHitting()
+    isHitting = false
+end
+
+-- Exemple d'utilisation
+startHitting() -- Démarrer la frappe
+task.wait(5) -- Attendre 5 secondes (juste pour l'exemple)
+stopHitting() -- Arrêter la frappe        
    -- The function that takes place when the toggle is pressed
    -- The variable (Value) is a boolean on whether the toggle is true or false
    end,
