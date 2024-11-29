@@ -39,7 +39,7 @@ local farmTab = Window:CreateTab("Farm", 4483362458) -- Title, Image
 
 
 local isHitting = false
-local Toggle = Tab:CreateToggle({
+local Toggle = farmTab:CreateToggle({
    Name = "farm xp",
    CurrentValue = false,
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no ouvert
