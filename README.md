@@ -25,10 +25,10 @@ local Window = Rayfield:CreateWindow({
    KeySettings = {
       Title = "Untitled",
       Subtitle = "Key System",
-      Note = "No method of obtaining the key is provided", -- Use this to tell the user how to get a key
+      Note = "No method of obtaining the key is provided",  provided", -- Use this to tell the user how to get a key
       FileName = "Key", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
       SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
-      GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+      GrabKeyFromSite = fal = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
       Key = {"Hello"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
    }
 })
@@ -39,7 +39,7 @@ local farmTab = Window:CreateTab("Farm", 4483362458) -- Title, Image
 
 
 local isHitting = false
-local Toggle = farmTab:CreateToggle({
+local Toggle = Tab:CreateToggle({
    Name = "farm xp",
    CurrentValue = false,
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no ouvert
@@ -70,7 +70,48 @@ end
 -- Exemple d'utilisation
 startHitting() -- Démarrer la frappe
 task.wait(5) -- Attendre 5 secondes (juste pour l'exemple)
-stopHitting() -- Arrêter la frappe        
+stopHitting() -- Arrêter la frappe
+   -- The function that takes place when the toggle is pressed
+   -- The variable (Value) is a boolean on whether the toggle is true or false
+   end,
+})
+
+
+
+
+local isHitting = false
+local Toggle = Tab:CreateToggle({
+   Name = "farm xp",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no ouvert
+   Callback = function(Value)
+   local args = {
+    [1] = workspace.NPC.Farmer.LeftUpperLeg
+}
+
+local isHitting = false -- Initialiser la variable isHitting
+
+-- Fonction pour démarrer la frappe
+local function startHitting()
+    isHitting = true
+    -- Lancer une boucle non bloquante
+    task.spawn(function()
+        while isHitting do
+            game:GetService("ReplicatedStorage").OnSuccessfulHit:FireServer(unpack(args))
+            task.wait(0.1) -- Pause de 0.1 seconde entre chaque frappe
+        end
+    end)
+end
+
+-- Fonction pour arrêter la frappe
+local function stopHitting()
+    isHitting = false
+end
+
+-- Exemple d'utilisation
+startHitting() -- Démarrer la frappe
+task.wait(5) -- Attendre 5 secondes (juste pour l'exemple)
+stopHitting() -- Arrêter la frappe
    -- The function that takes place when the toggle is pressed
    -- The variable (Value) is a boolean on whether the toggle is true or false
    end,
