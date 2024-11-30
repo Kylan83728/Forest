@@ -16,7 +16,7 @@ local Window = Rayfield:CreateWindow({
    },
 
    Discord = {
-      Enabled = falslocal Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+      Enabled = false, -- Prompt the user to join your Discord server if their executor supports it
       Invite = "noinvitelink", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ABCD would be ABCD
       RememberJoins = true -- Set this to false to make them join the discord every time they load it up
    },
@@ -35,55 +35,14 @@ local Window = Rayfield:CreateWindow({
 
 
 
-local farmTab = Window:CreateTab("Farm", 4483362458) -- Title, Image
+local farmTab = Window:CreateTab("farm", 4483362458) -- Title, Image
 
 
 local isHitting = false
-local Toggle = Tab:CreateToggle({
+local Toggle = farmTab:CreateToggle({
    Name = "farm xp",
    CurrentValue = false,
-   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no ouvert
-   Callback = function(Value)
-   local args = {
-    [1] = workspace.NPC.Farmer.LeftUpperLeg
-}
-
-local isHitting = false -- Initialiser la variable isHitting
-
--- Fonction pour démarrer la frappe
-local function startHitting()
-    isHitting = true
-    -- Lancer une boucle non bloquante
-    task.spawn(function()
-        while isHitting do
-            game:GetService("ReplicatedStorage").OnSuccessfulHit:FireServer(unpack(args))
-            task.wait(0.1) -- Pause de 0.1 seconde entre chaque frappe
-        end
-    end)
-end
-
--- Fonction pour arrêter la frappe
-local function stopHitting()
-    isHitting = false
-end
-
--- Exemple d'utilisation
-startHitting() -- Démarrer la frappe
-task.wait(5) -- Attendre 5 secondes (juste pour l'exemple)
-stopHitting() -- Arrêter la frappe
-   -- The function that takes place when the toggle is pressed
-   -- The variable (Value) is a boolean on whether the toggle is true or false
-   end,
-})
-
-
-
-
-local isHitting = false
-local Toggle = Tab:CreateToggle({
-   Name = "farm xp",
-   CurrentValue = false,
-   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no ouvert
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
    local args = {
     [1] = workspace.NPC.Farmer.LeftUpperLeg
